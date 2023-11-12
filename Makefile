@@ -9,7 +9,7 @@ SELINUX1 := :z
 SELINUX2 := ,z
 endif
 
-.PHONY: all clean
+.PHONY: all clean mv
 
 all:
 	$(DOCKER) build --tag zmk --file Dockerfile .
@@ -18,6 +18,10 @@ all:
 		-v $(PWD)/config:/app/config:ro$(SELINUX2) \
 		-e TIMESTAMP=$(TIMESTAMP) \
 		zmk
+
+mv:
+	-mv firmware/*-left.uf2 firmware/left.uf2
+	-mv firmware/*-right.uf2 firmware/right.uf2
 
 clean:
 	rm -f firmware/*.uf2
